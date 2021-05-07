@@ -9,8 +9,4 @@
 !*/
 !README.md
 !.gitignore
-!*.vhd
 !*.v
-!*.bd
-!*.edif
-!*.xdc
