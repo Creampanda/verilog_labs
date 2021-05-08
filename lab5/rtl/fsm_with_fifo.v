@@ -17,8 +17,8 @@ reg  [1:0] state;
 wire [7:0] data_from_fifo_for_transmitter;
 wire       fifo_is_empty;
 wire       fifo_re;
-wire        transmitter_is_busy;
-wire        start_transaction;
+wire       transmitter_is_busy;
+wire       start_transaction;
 
 
 //state machine 
@@ -40,21 +40,12 @@ assign start_transaction = (state == transmit);
 fifo fifo_input_buffer(
   .clk100_i   (clk100_i),
   .rstn_i     (rstn_i),
-  .we_i         (we_i),
-  .re_i         (fifo_re),
+  .we_i       (we_i),
+  .re_i       (fifo_re),
   .data_i     (data),
   .data_o     (data_from_fifo_for_transmitter),
   .empty_o    (fifo_is_empty),
   .full_o     (full_o)
-);
-
-transmitter my_transmitter(
-  .clk100_i (clk100_i),
-  .rstn_i   (rstn_i),
-  .start    (start_transaction),
-  .busy     (transmitter_is_busy),
-  .data     (data_from_fifo_for_transmitter),
-  .tx       (transmit_lane_o)
 );
 
 
