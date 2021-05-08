@@ -14,22 +14,22 @@ module stopwatch(
 
 
 
-localparam  STOPWATCH_DEFAULT  = 1'd0;
-localparam  STOPWATCH_SET      = 1'd1;
-localparam  COUNTER_MAX        = 4'd9;
+localparam  STOPWATCH_DEFAULT   = 1'd0;
+localparam  STOPWATCH_SET       = 1'd1;
+localparam  COUNTER_MAX         = 4'd9;
 
-reg         device_running     = 1'b0;
-reg         state_stopwatch    = STOPWATCH_DEFAULT;
+reg         device_running      = 1'b0;
+reg         state_stopwatch     = STOPWATCH_DEFAULT;
 reg         next_state_stopwatch;
-reg  [1:0]  current_hex        = 2'b0;
-reg  [3:0] hundredths_counter  = 4'd0;
-reg  [3:0] tenths_counter      = 4'd0;
-reg  [3:0] seconds_counter     = 4'd0;
-reg  [3:0] ten_seconds_counter = 4'd0;
-wire       device_stopped;
-wire       btn_start_was_pressed;
-wire       btn_set_was_pressed;
-wire       btn_change_was_pressed;
+reg  [1:0]  current_hex         = 2'b0;
+reg  [3:0]  hundredths_counter  = 4'd0;
+reg  [3:0]  tenths_counter      = 4'd0;
+reg  [3:0]  seconds_counter     = 4'd0;
+reg  [3:0]  ten_seconds_counter = 4'd0;
+wire        device_stopped;
+wire        btn_start_was_pressed;
+wire        btn_set_was_pressed;
+wire        btn_change_was_pressed;
 
 decoder d1 (
   .counter_i       ( hundredths_counter     ),
