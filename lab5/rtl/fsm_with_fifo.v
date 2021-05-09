@@ -38,15 +38,22 @@ assign fifo_re = (state == load);
 assign start_transaction = (state == transmit);
 
 fifo fifo_input_buffer(
-  .clk100_i   (clk100_i),
-  .rstn_i     (rstn_i),
-  .we_i       (we_i),
-  .re_i       (fifo_re),
-  .data_i     (data),
-  .data_o     (data_from_fifo_for_transmitter),
-  .empty_o    (fifo_is_empty),
-  .full_o     (full_o)
+  .clk100_i  (clk100_i),
+  .rstn_i    (rstn_i),
+  .we_i      (we_i),
+  .re_i      (fifo_re),
+  .data_i    (data),
+  .data_o    (data_from_fifo_for_transmitter),
+  .empty_o   (fifo_is_empty),
+  .full_o    (full_o)
 );
 
-
+ transmitter my_transmitter(
+  .clk100_i  (clk100_i),
+  .rstn_i    (rstn_i),
+  .start     (start_transaction),
+  .busy      (transmitter_is_busy),
+  .data      (data_from_fifo_for_transmitter),
+  .tx        (transmit_lane_o)
+ );
 endmodule
