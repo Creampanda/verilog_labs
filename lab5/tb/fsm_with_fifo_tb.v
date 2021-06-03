@@ -1,5 +1,4 @@
 `timescale 1ns / 10ps
-
 //////////////////////////////////////////////////////////////////////////////////
 // Company: 
 // Engineer: 
@@ -22,47 +21,73 @@
 
 
 
-module transmitter_tb(
+module fsm_with_fifo_tb(
 
   );
 
 localparam CLK_FREQ_MHZ = 100;
 localparam CLK_SEMIPERIOD = (1000/CLK_FREQ_MHZ/2);
 
-reg clk100_i;
-reg rstn_i;
-reg start_i;
-reg [7:0] data_i;
-wire busy;
-wire [7:0] tx;
+reg       clk100_i;
+reg       rstn_i;
+reg       btn_i;
+wire      full_o;
+wire [7:0]    transmit_lane_o;
 
-transmitter dut(
+fsm_with_fifo dut(
   .clk100_i (clk100_i),
   .rstn_i (rstn_i),
-  .start_i (start_i),
-  .data_i (data_i),
-  .busy (busy),
-  .tx (tx)
+  .btn_i (btn_i),
+  .full_o (full_o),
+  .transmit_lane_o (transmit_lane_o)
 );
 
 
 initial begin
   rstn_i = 1'b0;
-  start_i = 1'b0;
   #20
   rstn_i = 1'b1;
   #20
-  data_i = 8'b1111_0000;
+  btn_i = 1'b1;
   #20
-  start_i = 1'b1;
+  btn_i = 1'b0;
   #20
-  start_i = 1'b0;
+  btn_i = 1'b1;
   #20
-  data_i = 8'b1111_0110;
+  btn_i = 1'b0;
   #20
-  start_i = 1'b1;
+  btn_i = 1'b1;
   #20
-  start_i = 1'b0;
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+  #20
+  btn_i = 1'b1;
+  #20
+  btn_i = 1'b0;
+
 
 end
 

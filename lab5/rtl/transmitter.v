@@ -1,32 +1,35 @@
 module transmitter (
   input               clk100_i,
   input               rstn_i,
-  input               start,
-  input       [7:0]   data,
+  input               start_i,
+  input       [7:0]   data_i,
   output              busy,
   output reg  [7:0]   tx
 );
 
-wire second_passed;
-wire device_running;
-
-stopwatch s1 (
-  .clk100_i       (clk100_i),
-  .rstn_i         (rstn_i),
-  .start          (start),
-  .second_passed  (second_passed),
-  .device_running (device_running)
-);
+reg [3:0] counter = 4'b0000;
+reg device_running = 0;
 
 assign busy = device_running;
 
 always @( posedge clk100_i or negedge rstn_i ) begin
   if ( ~rstn_i ) begin
-    tx            <= 8'b0;
+    tx                <= 0;
+    counter           <= 0;
+    device_running    <= 0;
   end
   else begin
-    if ( second_passed ) begin
-      tx   <= data;
+    if ( start_i == 1'b1 && ~device_running ) begin
+      counter        <= 1'b1;
+      device_running <= 1'b1;
+    end
+    else if ( device_running && counter == 4'b1111 ) begin
+      tx                <= data_i;
+      counter           <= 0;
+      device_running    <= 0;
+    end
+    else if ( device_running ) begin
+      counter = counter + 1;
     end
   end
 end

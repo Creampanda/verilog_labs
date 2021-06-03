@@ -14,7 +14,7 @@ integer i;
 reg [7:0] mem [0 : fifo_size**2 - 1];
 reg [fifo_size - 1 : 0] read_address;
 reg [fifo_size - 1 : 0] write_address;
-reg                    full_reg;
+reg                     full_reg;
 
 assign empty_o = (write_address == 0);
 assign full_o  = full_reg;
@@ -24,7 +24,7 @@ always @( posedge clk100_i or negedge rstn_i ) begin
     read_address <= 0;
     write_address <= 0;
     full_reg <= 0;
-    for (i = 0; i <= fifo_size**2; i = i + 1)
+    for (i = 0; i < fifo_size**2; i = i + 1)
       mem[i] <= 0;
   end
   else if ( we_i && ~full_reg ) begin
